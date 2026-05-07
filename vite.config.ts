@@ -5,7 +5,7 @@ import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
-  base: '/',
+  base: '/postmd/',
   plugins: [react()],
   esbuild: {
     pure: ['console.log'],
