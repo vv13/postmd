@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useCallback, useEffect, type ReactNode } from 'react'
+import { Group, Panel, Separator } from 'react-resizable-panels'
 import { Md2Poster, Md2PosterContent, Md2Markdown } from '../components'
 
 function PosterAutoScale({ children, width }: { children: ReactNode; width: number }) {
@@ -167,85 +168,91 @@ function DocsPage() {
         </div>
       </header>
 
-      <div className="flex-1 flex overflow-hidden">
-        <div className="w-[35%] flex flex-col bg-white border-r border-gray-200">
-          <div className="flex items-center justify-between px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-gray-400 bg-gray-50 border-b border-gray-100 shrink-0">
-            <span>Editor</span>
-            <span className="text-gray-300">{markdown.length} chars</span>
-          </div>
-          <textarea
-            className="flex-1 w-full p-5 font-mono text-[13px] leading-7 resize-none focus:outline-none text-gray-700 placeholder-gray-300"
-            value={markdown}
-            onChange={(e) => setMarkdown(e.target.value)}
-            placeholder="Type your markdown here..."
-            spellCheck={false}
-          />
-        </div>
-
-        <div className="flex-1 flex flex-col overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-          <div className="flex items-center gap-3 px-4 py-2.5 bg-gray-50/80 border-b border-gray-100 shrink-0">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Theme</span>
-              {THEMES.map((t) => (
-                <button
-                  key={t.value}
-                  onClick={() => setActiveTheme(t.value)}
-                  title={t.name}
-                  className={`w-7 h-7 rounded-full border-2 transition-all hover:scale-110 ${
-                    activeTheme === t.value ? 'border-indigo-500 scale-110 ring-2 ring-indigo-200' : 'border-white/60'
-                  }`}
-                  style={{ background: t.gradient }}
-                />
-              ))}
-            </div>
-
-            <div className="w-px h-5 bg-gray-200" />
-
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Width</span>
-              <input
-                type="range"
-                min={320}
-                max={800}
-                step={10}
-                value={width}
-                onChange={(e) => setWidth(Number(e.target.value))}
-                className="w-32 accent-indigo-600"
+      <div className="flex-1 overflow-hidden">
+        <Group orientation="horizontal" id="main-layout">
+          <Panel defaultSize="35%" minSize="20%" maxSize="70%" id="editor">
+            <div className="flex flex-col bg-white h-full">
+              <div className="flex items-center justify-between px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-gray-400 bg-gray-50 border-b border-gray-100 shrink-0">
+                <span>Editor</span>
+                <span className="text-gray-300">{markdown.length} chars</span>
+              </div>
+              <textarea
+                className="flex-1 w-full p-5 font-mono text-[13px] leading-7 resize-none focus:outline-none text-gray-700 placeholder-gray-300"
+                value={markdown}
+                onChange={(e) => setMarkdown(e.target.value)}
+                placeholder="Type your markdown here..."
+                spellCheck={false}
               />
-              <span className="text-xs font-mono text-gray-500 w-10 text-right">{width}</span>
             </div>
+          </Panel>
+          <Separator className="w-[10px] bg-gray-200 hover:bg-indigo-400 active:bg-indigo-500 cursor-col-resize transition-colors" />
+          <Panel>
+            <div className="flex flex-col h-full bg-gradient-to-br from-gray-100 to-gray-200">
+              <div className="flex items-center gap-3 px-4 py-2.5 bg-gray-50/80 border-b border-gray-100 shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Theme</span>
+                  {THEMES.map((t) => (
+                    <button
+                      key={t.value}
+                      onClick={() => setActiveTheme(t.value)}
+                      title={t.name}
+                      className={`w-7 h-7 rounded-full border-2 transition-all hover:scale-110 ${
+                        activeTheme === t.value ? 'border-indigo-500 scale-110 ring-2 ring-indigo-200' : 'border-white/60'
+                      }`}
+                      style={{ background: t.gradient }}
+                    />
+                  ))}
+                </div>
 
-            <div className="w-px h-5 bg-gray-200" />
+                <div className="w-px h-5 bg-gray-200" />
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Margin</span>
-              <input
-                type="range"
-                min={0}
-                max={8}
-                step={1}
-                value={cardMargin}
-                onChange={(e) => setCardMargin(Number(e.target.value))}
-                className="w-32 accent-indigo-600"
-              />
-              <span className="text-xs font-mono text-gray-500 w-4 text-right">{cardMargin}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Width</span>
+                  <input
+                    type="range"
+                    min={320}
+                    max={800}
+                    step={10}
+                    value={width}
+                    onChange={(e) => setWidth(Number(e.target.value))}
+                    className="w-32 accent-indigo-600"
+                  />
+                  <span className="text-xs font-mono text-gray-500 w-10 text-right">{width}</span>
+                </div>
+
+                <div className="w-px h-5 bg-gray-200" />
+
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Margin</span>
+                  <input
+                    type="range"
+                    min={0}
+                    max={8}
+                    step={1}
+                    value={cardMargin}
+                    onChange={(e) => setCardMargin(Number(e.target.value))}
+                    className="w-32 accent-indigo-600"
+                  />
+                  <span className="text-xs font-mono text-gray-500 w-4 text-right">{cardMargin}</span>
+                </div>
+              </div>
+
+              <div className="flex-1 overflow-auto flex items-start justify-center p-8">
+                <PosterAutoScale width={width}>
+                  <Md2Poster
+                    theme={activeTheme as any}
+                    scale={scale}
+                    ref={posterRef}
+                  >
+                    <Md2PosterContent margin={cardMargin}>
+                      <Md2Markdown>{markdown}</Md2Markdown>
+                    </Md2PosterContent>
+                  </Md2Poster>
+                </PosterAutoScale>
+              </div>
             </div>
-          </div>
-
-          <div className="flex-1 overflow-auto flex items-start justify-center p-8">
-            <PosterAutoScale width={width}>
-              <Md2Poster
-                theme={activeTheme as any}
-                scale={scale}
-                ref={posterRef}
-              >
-                <Md2PosterContent margin={cardMargin}>
-                  <Md2Markdown>{markdown}</Md2Markdown>
-                </Md2PosterContent>
-              </Md2Poster>
-            </PosterAutoScale>
-          </div>
-        </div>
+          </Panel>
+        </Group>
       </div>
     </div>
   )
