@@ -1,17 +1,18 @@
 # PostMD
 
-PostMD is a web-based Markdown-to-poster editor. Write Markdown on the left, preview the rendered poster on the right, and export it as an image.
+PostMD is a web-based Markdown-to-poster editor. Write Markdown on the left, preview the rendered poster on the right, and export it as a high-quality image.
+
+Live demo: https://vv13.github.io/postmd
 
 ## Features
 
-- [x] Split-pane Markdown editor with live poster preview
-- [x] 9 built-in color themes with one-click switching
-- [x] Adjustable poster width and export scale (1x/2x/3x)
-- [x] KaTeX math formula rendering (inline & block)
-- [x] GFM support (tables, strikethrough, task lists)
-- [x] Copy poster to clipboard or download as PNG
-- [x] Built with React + Vite + Tailwind CSS
-- [ ] More poster templates
+- Split-pane layout with resizable panels (drag to adjust editor/preview ratio)
+- 9 built-in color themes with one-click switching
+- Adjustable poster width (320px–1200px) and export scale (1x/2x/3x)
+- KaTeX math formula rendering (inline & block)
+- GFM support (tables, strikethrough, task lists)
+- Copy poster to clipboard or download as PNG
+- Built with React + Vite + Tailwind CSS
 
 ## Getting Started
 
