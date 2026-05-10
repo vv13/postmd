@@ -82,6 +82,7 @@ function DocsPage() {
   const [activeTheme, setActiveTheme] = useState('SpringGradientWave')
   const [scale, setScale] = useState(2)
   const [width, setWidth] = useState(480)
+  const [cardMargin, setCardMargin] = useState(0)
   const posterRef = useRef<any>(null)
 
   return (
@@ -170,6 +171,22 @@ function DocsPage() {
               />
               <span className="text-xs font-mono text-gray-500 w-10 text-right">{width}</span>
             </div>
+
+            <div className="w-px h-5 bg-gray-200" />
+
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-gray-400 mr-1">Margin</span>
+              <input
+                type="range"
+                min={0}
+                max={8}
+                step={1}
+                value={cardMargin}
+                onChange={(e) => setCardMargin(Number(e.target.value))}
+                className="w-32 accent-indigo-600"
+              />
+              <span className="text-xs font-mono text-gray-500 w-4 text-right">{cardMargin}</span>
+            </div>
           </div>
 
           <div className="flex-1 overflow-auto flex items-start justify-center p-8">
@@ -179,7 +196,7 @@ function DocsPage() {
                 scale={scale}
                 ref={posterRef}
               >
-                <Md2PosterContent>
+                <Md2PosterContent margin={cardMargin}>
                   <Md2Markdown>{markdown}</Md2Markdown>
                 </Md2PosterContent>
               </Md2Poster>

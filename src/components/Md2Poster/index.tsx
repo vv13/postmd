@@ -53,8 +53,24 @@ const Md2Poster = forwardRef<Md2PosterRef, Md2PosterProps>(
     const snapshot = useCallback(async (): Promise<Blob> => {
       const el = mdRef.current
       if (!el) throw new Error('Md2Poster ref is not mounted')
+      // Find and temporarily disable any CSS transforms applied by preview scaling (PosterAutoScale)
+      let scaledParent: HTMLElement | null = el.parentElement
+      const savedTransforms: { el: HTMLElement; transform: string }[] = []
+      while (scaledParent) {
+        const t = getComputedStyle(scaledParent).transform
+        if (t && t !== 'none') {
+          savedTransforms.push({ el: scaledParent, transform: scaledParent.style.transform })
+          scaledParent.style.transform = 'none'
+        }
+        scaledParent = scaledParent.parentElement
+      }
       await new Promise((r) => setTimeout(r, 100))
-      return (await domToBlob(el, { scale })) as Blob
+      const blob = (await domToBlob(el, { scale })) as Blob
+      // Restore transforms
+      for (const { el, transform } of savedTransforms) {
+        el.style.transform = transform
+      }
+      return blob
     }, [scale])
 
     const handleCopy = useCallback(async (): Promise<Blob> => {
