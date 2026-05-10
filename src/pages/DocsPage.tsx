@@ -211,13 +211,13 @@ function DocsPage() {
                   <input
                     type="range"
                     min={320}
-                    max={800}
+                    max={1200}
                     step={10}
                     value={width}
                     onChange={(e) => setWidth(Number(e.target.value))}
                     className="w-32 accent-indigo-600"
                   />
-                  <span className="text-xs font-mono text-gray-500 w-10 text-right">{width}</span>
+                  <span className="text-xs font-mono text-gray-500 w-12 text-right">{width}px</span>
                 </div>
 
                 <div className="w-px h-5 bg-gray-200" />
@@ -227,13 +227,13 @@ function DocsPage() {
                   <input
                     type="range"
                     min={0}
-                    max={8}
-                    step={1}
+                    max={48}
+                    step={2}
                     value={cardMargin}
                     onChange={(e) => setCardMargin(Number(e.target.value))}
                     className="w-32 accent-indigo-600"
                   />
-                  <span className="text-xs font-mono text-gray-500 w-4 text-right">{cardMargin}</span>
+                  <span className="text-xs font-mono text-gray-500 w-10 text-right">{cardMargin}px</span>
                 </div>
               </div>
 
